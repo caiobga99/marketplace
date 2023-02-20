@@ -51,14 +51,25 @@ routes.post("/register", async (req: Request, res: Response) => {
 routes.post("/signIn", async (req: Request, res: Response) => {
   const { name, email, password }: User = req.body;
 
-  const query: Users = await sequelize.query(
-    `SELECT email, senha, nome FROM users WHERE email = "${email}" AND senha = "${password}" AND nome = "${name}"`,
+  const isValid = await sequelize.query(
+    `SELECT email FROM users WHERE email = "${email}"`,
     {
       type: QueryTypes.SELECT,
     }
   );
-
-  query.length > 0 ? res.send("logged") : res.send("user not exists");
+  if (isValid.length > 0) {
+    const query: Users = await sequelize.query(
+      `SELECT email, senha, nome FROM users WHERE email = "${email}" AND senha = "${password}" AND nome = "${name}"`,
+      {
+        type: QueryTypes.SELECT,
+      }
+    );
+    query.length > 0
+      ? res.send("sucessful login")
+      : res.send("Error logging in, check your details and try again");
+  } else {
+    res.send("Email not registred");
+  }
 });
 
 appRoutes.use(routes);
