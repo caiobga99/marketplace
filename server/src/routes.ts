@@ -1,6 +1,8 @@
 import express, { Request, Response, Router } from "express";
+
 import { sequelize } from "./models/db";
 import { QueryTypes } from "sequelize";
+
 export const appRoutes = express.Router();
 
 const routes = Router();
@@ -78,7 +80,7 @@ routes.post("/user/signIn", async (req: Request, res: Response) => {
   }
 });
 
-routes.delete("/user/:id/delete", (req: Request, res: Response): void => {
+routes.delete("/user/delete/:id", (req: Request, res: Response): void => {
   const { id } = req.params;
   sequelize
     .query(`DELETE FROM users WHERE id = "${id}"`, {
