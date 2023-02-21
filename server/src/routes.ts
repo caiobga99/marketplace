@@ -92,4 +92,24 @@ routes.delete("/user/:id/delete", (req: Request, res: Response): void => {
     });
 });
 
+routes.patch("/user/update/:id", (req: Request, res: Response) => {
+  const { name, email, password } = req.body;
+  const { id } = req.params;
+  sequelize
+    .query(
+      `UPDATE users 
+    SET nome = "${name}", email = "${email}", senha = "${password}" 
+    WHERE id = "${id}";`,
+      {
+        type: QueryTypes.UPDATE,
+      }
+    )
+    .then(() => {
+      res.send("user update sucessfully!");
+    })
+    .catch((error) => {
+      console.log("Error in update user: ", error);
+    });
+});
+
 appRoutes.use(routes);
