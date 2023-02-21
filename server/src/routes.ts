@@ -10,7 +10,13 @@ interface User {
   email: String;
   password: String;
 }
+
+interface ExistingUsers {
+  email: string;
+}
+
 interface Users extends Array<User> {}
+interface ExistingUser extends Array<ExistingUsers> {}
 
 routes.get("/users", async (req: Request, res: Response) => {
   const users: Users = await sequelize.query("SELECT * FROM `users`", {
@@ -19,10 +25,10 @@ routes.get("/users", async (req: Request, res: Response) => {
   res.send(users);
 });
 
-routes.post("/register", async (req: Request, res: Response) => {
+routes.post("/user/signUp", async (req: Request, res: Response) => {
   const { name, email, password }: User = req.body;
 
-  const isValid = await sequelize.query(
+  const isValid: ExistingUser = await sequelize.query(
     `SELECT email FROM users WHERE email = "${email}"`,
     {
       type: QueryTypes.SELECT,
@@ -44,14 +50,14 @@ routes.post("/register", async (req: Request, res: Response) => {
           res.send("Sucessfully registered user.");
         })
         .catch((error) => {
-          console.log("Error :", error);
+          console.log("Error in register user:", error);
         });
 });
 
-routes.post("/signIn", async (req: Request, res: Response) => {
+routes.post("/user/signIn", async (req: Request, res: Response) => {
   const { name, email, password }: User = req.body;
 
-  const isValid = await sequelize.query(
+  const isValid: ExistingUser = await sequelize.query(
     `SELECT email FROM users WHERE email = "${email}"`,
     {
       type: QueryTypes.SELECT,
@@ -65,11 +71,25 @@ routes.post("/signIn", async (req: Request, res: Response) => {
       }
     );
     query.length > 0
-      ? res.send("sucessful login")
-      : res.send("Error logging in, check your details and try again");
+      ? res.send("sucessful login.")
+      : res.send("Error logging in, check your details and try again.");
   } else {
-    res.send("Email not registred");
+    res.send("Email not registred.");
   }
+});
+
+routes.delete("/user/:id/delete", (req: Request, res: Response): void => {
+  const { id } = req.params;
+  sequelize
+    .query(`DELETE FROM users WHERE id = "${id}"`, {
+      type: QueryTypes.DELETE,
+    })
+    .then(() => {
+      res.send("User deleted sucessfully");
+    })
+    .catch((error) => {
+      console.log("Error in delete user: ", error);
+    });
 });
 
 appRoutes.use(routes);
