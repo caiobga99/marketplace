@@ -27,7 +27,7 @@ export const SignUp = () => {
   };
 
   return (
-    <div className="app-container">
+    <div className="form-container">
       <div className="form-group">
         <label>Name</label>
         <input
