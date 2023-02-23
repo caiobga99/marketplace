@@ -1,7 +1,7 @@
 import { useForm } from "react-hook-form";
 import * as val from "validator";
 import { useState, useEffect } from "react";
-// import { axios } from "axios";
+import { api } from "../../lib/axios";
 import "./style.css";
 
 interface Datas {
@@ -22,14 +22,18 @@ export const SignUp = () => {
   } = useForm();
 
   const [isSafeToReset, setIsSafeToReset] = useState<boolean>(false);
-
+  const [messageOfSignUp, setMessageOfSignUp] = useState("");
   const watchPassword = watch("password");
 
   useEffect(() => {
     if (!isSafeToReset) return;
     reset();
   }, [reset]);
-  const onSubmit = (data: Datas) => {
+  const onSubmit = async (data: Datas) => {
+    await api.post("/user/signUp", data).then(({ data }) => {
+      setMessageOfSignUp(data);
+    });
+
     reset({
       name: "",
       email: "",
@@ -43,6 +47,7 @@ export const SignUp = () => {
 
   return (
     <div className="form-container">
+      <div className="message">{messageOfSignUp}</div>
       <div className="form-group">
         <label>Name</label>
         <input
