@@ -1,6 +1,7 @@
 import { useForm } from "react-hook-form";
 import * as val from "validator";
-
+import { useState, useEffect } from "react";
+// import { axios } from "axios";
 import "./style.css";
 
 interface Datas {
@@ -16,13 +17,27 @@ export const SignUp = () => {
     register,
     handleSubmit,
     watch,
+    reset,
     formState: { errors },
   } = useForm();
 
+  const [isSafeToReset, setIsSafeToReset] = useState<boolean>(false);
+
   const watchPassword = watch("password");
 
+  useEffect(() => {
+    if (!isSafeToReset) return;
+    reset();
+  }, [reset]);
   const onSubmit = (data: Datas) => {
-    alert(data);
+    reset({
+      name: "",
+      email: "",
+      password: "",
+      passwordConfirmation: "",
+      privacyTerms: "",
+    });
+    setIsSafeToReset(true);
     console.log(data);
   };
 
