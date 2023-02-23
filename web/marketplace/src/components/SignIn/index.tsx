@@ -29,6 +29,15 @@ export const SignIn = () => {
   const watchPassword = watch("password");
 
   const onSubmit = async (data: Datas) => {
+    setMessageOfSignIn("loading...");
+    await api.post("/user/signIn", data).then(({ data }) => {
+      setMessageOfSignIn(data);
+      setTimeout(() => {
+        setMessageOfSignIn("");
+      }, 5000);
+    });
+
+    setIsSafeToReset(true);
     console.log(data);
   };
 
