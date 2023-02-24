@@ -1,6 +1,7 @@
 import { useForm } from "react-hook-form";
 import * as val from "validator";
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 import { api } from "../../lib/axios";
 import { Header } from "../Header/index";
@@ -24,6 +25,8 @@ export const SignIn = () => {
     formState: { errors },
   } = useForm();
 
+  const navigate = useNavigate();
+
   const [isSafeToReset, setIsSafeToReset] = useState<boolean>(false);
   const [messageOfSignIn, setMessageOfSignIn] = useState("");
   const watchPassword = watch("password");
@@ -35,6 +38,11 @@ export const SignIn = () => {
       setTimeout(() => {
         setMessageOfSignIn("");
       }, 5000);
+      if (data === "sucessful login.") {
+        setTimeout(() => {
+          navigate("/");
+        }, 1000);
+      }
     });
 
     setIsSafeToReset(true);
