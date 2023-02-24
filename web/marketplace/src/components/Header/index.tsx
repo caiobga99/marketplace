@@ -3,9 +3,14 @@ import { Link, useLocation } from "react-router-dom";
 import "./style.css";
 
 export const Header = () => {
+  interface ILinks {
+    route: string;
+    title: string;
+  }
+
   const location = useLocation();
 
-  const links = [
+  const links: ILinks[] = [
     {
       route: "/",
       title: "Home",
@@ -32,7 +37,9 @@ export const Header = () => {
             to={link.route}
             className={location.pathname === link.route ? "currentUrl" : "link"}
           >
-            <div>{link.title}</div>
+            <div>
+              <h3>{link.title}</h3>
+            </div>
           </Link>
         );
       })}

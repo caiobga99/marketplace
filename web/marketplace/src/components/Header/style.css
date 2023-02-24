@@ -1,3 +1,4 @@
+@import url("https://fonts.googleapis.com/css2?family=Tilt+Neon&display=swap");
 .header-container {
   display: flex;
   flex-direction: row;
@@ -7,6 +8,7 @@
   height: 10%;
   font-weight: bold;
   background-color: #efefef;
+  font-family: "Tilt Neon", sans-serif;
 }
 
 .header-container div {
@@ -19,5 +21,8 @@
 .currentUrl {
   text-decoration: none;
   font-weight: bold;
-  color: crimson;
+  color: rgb(233, 38, 77);
+  text-shadow: -0.5px 0px 0px #000, 0.5px 0px 0px #000, 0px -0.5px 0px #000,
+    0px 0.5px 0px #000;
+  /* color: rgb(0, 0, 255); */
 }
