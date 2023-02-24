@@ -1,0 +1,12 @@
+.container {
+  height: 100%;
+  width: 100%;
+}
+.header-container {
+  height: 10%;
+  width: 100%;
+}
+.home-container {
+  height: 90%;
+  width: 100%;
+}
