@@ -1,3 +1,12 @@
+.container {
+  height: 100%;
+  width: 100%;
+}
+.header-container {
+  height: 10%;
+  width: 100%;
+}
+
 .form-container {
   background: #111;
   height: 90%;
@@ -72,4 +81,9 @@
   cursor: pointer;
   background-color: #61dbfb;
   font-weight: bold;
+}
+
+.message {
+  font-weight: bold;
+  color: #fff;
 }
