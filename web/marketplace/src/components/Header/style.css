@@ -12,3 +12,12 @@
 .header-container div {
   cursor: pointer;
 }
+
+.link {
+  text-decoration: none;
+}
+.currentUrl {
+  text-decoration: none;
+  font-weight: bold;
+  color: crimson;
+}
